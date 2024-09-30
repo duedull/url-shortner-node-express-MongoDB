@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const express = require('express')
+const shortid = require('shortid')
+const { new_Schema_url } = require('../models/url')
 
 const connect_db = async () => {
     try {
@@ -19,14 +20,14 @@ const HandleGetUrl = async (req, res) => {
     await new_Schema_url.create({
         short_id: short_ID,
         redirect_Url: body.url,
-        version_history: {},
+        version_history: [],
     })
     res.status(200).json({ "status": "done submitting!!!", "url_id": short_ID })
 }
 
 const HandleShortendUrl = async (req, res) => {
     const ID = req.params.id;
-    const url_match = await new_Schema_url.findOne({ short_id: ID });
+    const url_match = await new_Schema_url.findOneAndUpdate({ short_id: ID }, { timeStamp: [Date.now()] });
     const redirect = url_match.redirect_Url;
     console.log(redirect);
     res.redirect(redirect);
