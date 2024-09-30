@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        URL shortner
+    </h1>
+         <% if (locals.id) { %>
+            <p>URL generated: <%= id %></p>
+            <button onclick="navigator.clipboard.writeText(cc)">copy</button>
+         <% } %>       
+    <form method="post" action="/short">
+        <label for="inp">Input Your URL here</label>
+        <input id="ipu" type="text" name="url" placeholder="Enter URL... e.g. google.com">
+        <button type="submit">Generate</button>
+    </form>
+    <br>
+    <br>
+    <div>
+        <% if (locals.url) { %>
+         <table border="3">
+            <thead>
+                <th>S. no</th>
+                <th>Short ID:</th>
+                <th>Redirect to:</th>
+                <th>Counts</th>
+            </thead>
+            <tbody>
+                <% url.forEach((v,i) => { %>
+                 <tr>
+                    <td><%= i + 1%></td>
+                    <td><%= v.short_id %></td>
+                    <td><%= v.redirect_Url %></td>
+                    <td><%= v.visitHistory.length %></td>
+                 </tr>
+                <% }) %>
+            </tbody>
+         </table>
+        <% } %>
+    </div>
+</body>
+</html>
+
