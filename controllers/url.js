@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid')
-const { new_Schema_url } = require('../models/url')
+const { new_Schema_url } = require('../models/url');
+const { timeStamp } = require('console');
 
 const connect_db = async () => {
     try {
@@ -27,7 +28,7 @@ const HandleGetUrl = async (req, res) => {
 
 const HandleShortendUrl = async (req, res) => {
     const ID = req.params.id;
-    const url_match = await new_Schema_url.findOneAndUpdate({ short_id: ID }, { timeStamp: [Date.now()] });
+    const url_match = await new_Schema_url.findOneAndUpdate({ short_id: ID }, { $push: { visitHistory: { timeStamp: Date.now(), } } });
     const redirect = url_match.redirect_Url;
     console.log(redirect);
     res.redirect(redirect);

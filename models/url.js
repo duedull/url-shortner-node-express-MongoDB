@@ -1,4 +1,6 @@
+const { timeStamp } = require('console');
 const mongoose = require('mongoose');
+const { type } = require('os');
 
 const url_schema = new mongoose.Schema({
     short_id: {
@@ -12,15 +14,10 @@ const url_schema = new mongoose.Schema({
         required: true,
     },
 
-    version_history: [
-        {
-            timeStamp: {
-                type: Number
-            }
-        }
-    ]
+    visitHistory: [{ timeStamp: { type: Number } }],
 },
-    { timestamps: true });
+    { timestamps: true }
+);
 
 //model 
 const new_Schema_url = mongoose.model("url", url_schema);
